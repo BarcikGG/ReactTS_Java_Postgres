@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Corporate A';
+  src: local('Corporate A Light'), local('Corporate-A-Light'),
+      url('CorporateA-Light.woff2') format('woff2'),
+      url('CorporateA-Light.woff') format('woff'),
+      url('CorporateA-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+h1, h2, h3, p {
+  font-family: Corporate A;
+}
+
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
