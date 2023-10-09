@@ -1,6 +1,15 @@
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
 
+export const fetchCategoriesData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}categories`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchCarsData = async () => {
   try {
     const response = await axios.get(`${BASE_URL}cars`);
