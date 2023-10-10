@@ -20,10 +20,23 @@ export const fetchCarsData = async () => {
 };
 
 export const fetchCarData = async (id: any) => {
-    try {
-        const response = await axios.get(`${BASE_URL}cars/${id}`);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+  try {
+      const response = await axios.get(`${BASE_URL}cars/${id}`);
+      return response.data;
+  } catch (error) {
+      throw error;
+  }
+};
+
+export const sendMailApi = async(formData: any) => {
+  const url = `${BASE_URL}/sendEmail?fullName=${formData.fullName}
+  &email=${formData.email}
+  &phoneNumber=${formData.phoneNumber}
+  &carName=${formData.carName}`;
+  try {
+    const response = await axios.get(url);
+    console.log(response.data);
+  } catch (error) {
+      console.error(error);
+  }
 };

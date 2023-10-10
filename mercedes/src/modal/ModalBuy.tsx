@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import ModalFormProps from '../models/ModalFormInterface';
 import Modal from 'react-modal';
+import { sendMailApi } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
-const ModalBuy: React.FC<ModalFormProps> = ({ isOpen, onClose }) => {
+const ModalBuy: React.FC<ModalFormProps & { CarName: string }> = ({ isOpen, onClose, CarName}) => {
+    const navigate = useNavigate();
     const [isFormValid, setIsFormValid] = useState<boolean>(false);
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         phoneNumber: '',
+        carName: '',
     });
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
         const isValidPhoneNumber = /^\+\d{11}$/.test(formData.phoneNumber.trim());
-        // setFormData({ ...formData, [name]: value });
 
         if (type === "checkbox") {
             setIsCheckboxChecked(checked);
@@ -29,13 +32,14 @@ const ModalBuy: React.FC<ModalFormProps> = ({ isOpen, onClose }) => {
           formData.email.trim() !== '' &&
           isValidPhoneNumber &&
           !isCheckboxChecked
-      
+        
         setIsFormValid(IsFormValid);
     };
       
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(formData);
+        navigate('/Sent');
         onClose();
     };
 
@@ -93,6 +97,13 @@ const ModalBuy: React.FC<ModalFormProps> = ({ isOpen, onClose }) => {
                 className='h-[2.5rem] px-[.4rem] bg-[#192457] 
                 border border-white rounded-[.2rem] mb-[2rem]'
             />
+            <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.carName = CarName}
+                className=' hidden'
+            />
             </div>
             <div className='flex text-left text-[.8rem]'>
                 <label className="flex items-center">
@@ -108,9 +119,10 @@ const ModalBuy: React.FC<ModalFormProps> = ({ isOpen, onClose }) => {
                 </label>
             </div>
             <button type="submit"
-            className={`w-full py-2 mt-[3.5rem] rounded-[0.5rem] text-[#192457] 
-            ${!isFormValid ? 'bg-gray-500 cursor-not-allowed' : 'bg-white hover:bg-blue-600'}`}
-            disabled={!isFormValid}>Подтвердить</button>
+                className={`w-full py-2 mt-[3.5rem] rounded-[0.5rem] text-[#192457] 
+                ${!isFormValid ? 'bg-gray-500 cursor-not-allowed' : 'bg-white hover:bg-blue-600'}`}
+                disabled={!isFormValid} onClick={() => sendMailApi(formData)}>Подтвердить
+            </button>
         </form>
         </Modal>
     );

@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.dao.CarDAO;
 import org.example.dao.CategoryDAO;
+import org.example.dao.MailDAO;
 import org.example.models.ICar;
 import org.example.models.ICategory;
 import org.example.utils.Util;
@@ -18,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
         Spark.port(8000);
 
-        enableCORS("*", "GET,POST,PUT,DELETE", "Content-Type,Authorization");
+        enableCORS("*", "GET, POST, OPTIONS", "Content-Type,Authorization");
 
         try {
             System.out.println("DB password: ");
@@ -27,6 +28,7 @@ public class Main {
 
             Connection connection = DriverManager.getConnection(config.getDbUrl(), config.getDbUser(), config.getDbPassword());
             Statement statement = connection.createStatement();
+            System.out.println("Сервер запущен!");
 
             ICar.setCars(CarDAO.getAllCarsFromDB(statement));
             ICategory.setCategories(CategoryDAO.getAllCategoriesFromDB(statement));
@@ -45,13 +47,32 @@ public class Main {
                 String id = req.params("id");
                 ICar car = Util.findCarById(ICar.getCars(), id);
                 if (car != null) {
-                    res.type("application/json"); // Устанавливаем тип контента в JSON
+                    res.type("application/json");
                     return Util.toJson(car);
                 } else {
                     res.status(404);
                     return "Машина не найдена";
                 }
             });
+
+            Spark.get("/sendEmail", (request, response) -> {
+                try {
+                    String fullName = request.queryParams("fullName");
+                    String email = request.queryParams("email");
+                    String phoneNumber = request.queryParams("phoneNumber");
+                    String carName = request.queryParams("carName");
+
+                    MailDAO.sendEmail(fullName, email, phoneNumber, carName);
+
+                    response.status(200);
+                    return "Письмо отправлено успешно";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.status(500);
+                    return "Ошибка при отправке письма";
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

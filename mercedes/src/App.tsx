@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import AllCars from './pages/AllCarsPage';
 import Car from './pages/CarPage';
 import NotFoundPage from './pages/NotFoundPage';
+import MessageSentPage from './pages/MessageSentPage';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={ <HomePage/> } />
         <Route path='/Catalog' element={ <AllCars/> } />
         <Route path="/Configure/:id" element={<Car/>} />
+        <Route path="/Sent" element={ <MessageSentPage/> } />
         <Route path="/404" element={ <NotFoundPage/> } />
       </Routes>
     </>

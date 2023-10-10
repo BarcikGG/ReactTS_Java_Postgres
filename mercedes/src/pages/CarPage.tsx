@@ -62,13 +62,13 @@ export default function Car() {
             <h3>Описание</h3>
             <p>{data.description}</p>
           </div>
+          <ModalBuy isOpen={isModalOpen} CarName={data.name} onClose={() => setIsModalOpen(false)}/>
         </div>
       ) : (
         <div>
           <h1 className='text-[4rem] weight-900 text-center text-[#192457]'>Машина с указанным ID не найдена.</h1>
         </div>
       )}
-      <ModalBuy isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
     </div>
   );
 }
