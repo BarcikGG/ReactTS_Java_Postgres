@@ -3,8 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import ICar from "../models/CarInterface";
 import { fetchCarData } from "../services/api";
 import DropdownSelect from "../components/DropDownSelect";
+import ModalBuy from "../modal/ModalBuy";
 
 export default function Car() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
   const [data, setData] = useState<ICar | null>(null);
   const navigate = useNavigate();
@@ -39,10 +41,11 @@ export default function Car() {
             h-[25rem] rounded-[.5rem] border-[.1rem]
             border-[#192457] mt-[1rem]"/>
             <div className="flex justify-between">
-              <h1 className="font-600 text-[2rem] mt-[2rem]">Price: ${data.price}</h1>
+              <h1 className="font-600 text-[2rem] mt-[1.6rem]">Price: ${data.price}</h1>
               <button  className='w-[20rem] h-[2rem] 
               rounded-[.5rem] border-[.1rem] mt-[2rem]
-              border-[black] hover:bg-[#192457] hover:text-white'>
+              border-[black] hover:bg-[#192457] hover:text-white'
+              onClick={() => setIsModalOpen(true)}>
               buy
               </button>
             </div>
@@ -65,6 +68,7 @@ export default function Car() {
           <h1 className='text-[4rem] weight-900 text-center text-[#192457]'>Машина с указанным ID не найдена.</h1>
         </div>
       )}
+      <ModalBuy isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
     </div>
   );
 }
