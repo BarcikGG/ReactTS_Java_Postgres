@@ -2,7 +2,7 @@ package org.example.models;
 
 import java.util.List;
 
-public class ICar {
+public class Car {
     private String id;
     private String name;
     private String description;
@@ -14,7 +14,7 @@ public class ICar {
     private int categoryID;
     private int price;
 
-    public ICar(String id, String name, String description, int hp, boolean amg, boolean coupe, int year, String img_url, int categoryID, int price) {
+    public Car(String id, String name, String description, int hp, boolean amg, boolean coupe, int year, String img_url, int categoryID, int price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,14 +27,14 @@ public class ICar {
         this.price = price;
     }
 
-    private static List<ICar> cars;
+    private static List<Car> cars;
 
-    public static List<ICar> getCars() {
+    public static List<Car> getCars() {
         return cars;
     }
 
-    public static void setCars(List<ICar> cars) {
-        ICar.cars = cars;
+    public static void setCars(List<Car> cars) {
+        Car.cars = cars;
     }
 
     public String getId() {

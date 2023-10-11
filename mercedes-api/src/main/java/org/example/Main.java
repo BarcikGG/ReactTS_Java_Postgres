@@ -3,11 +3,10 @@ package org.example;
 import org.example.dao.CarDAO;
 import org.example.dao.CategoryDAO;
 import org.example.dao.MailDAO;
-import org.example.models.ICar;
-import org.example.models.ICategory;
+import org.example.models.Car;
+import org.example.models.Category;
 import org.example.utils.Util;
 import org.example.config.config;
-import spark.Request;
 import spark.Spark;
 
 import java.sql.Connection;
@@ -30,22 +29,22 @@ public class Main {
             Statement statement = connection.createStatement();
             System.out.println("Сервер запущен!");
 
-            ICar.setCars(CarDAO.getAllCarsFromDB(statement));
-            ICategory.setCategories(CategoryDAO.getAllCategoriesFromDB(statement));
+            Car.setCars(CarDAO.getAllCarsFromDB(statement));
+            Category.setCategories(CategoryDAO.getAllCategoriesFromDB(statement));
 
             Spark.get("/cars", (req, res) -> {
                 res.type("application/json");
-                return Util.toJson(ICar.getCars());
+                return Util.toJson(Car.getCars());
             });
 
             Spark.get("/categories", (req, res) -> {
                 res.type("application/json");
-                return Util.toJson(ICategory.getCategories());
+                return Util.toJson(Category.getCategories());
             });
 
             Spark.get("/cars/:id", (req, res) -> {
                 String id = req.params("id");
-                ICar car = Util.findCarById(ICar.getCars(), id);
+                Car car = Util.findCarById(Car.getCars(), id);
                 if (car != null) {
                     res.type("application/json");
                     return Util.toJson(car);

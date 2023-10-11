@@ -1,18 +1,18 @@
 package org.example.dao;
 
-import org.example.models.ICar;
+import org.example.models.Car;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarDAO {
-    public static List<ICar> getAllCarsFromDB(Statement statement) {
-        List<ICar> cars = new ArrayList<>();
+    public static List<Car> getAllCarsFromDB(Statement statement) {
+        List<Car> cars = new ArrayList<>();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM cars");
             while (resultSet.next()) {
-                ICar car = new ICar(
+                Car car = new Car(
                         resultSet.getString("id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),

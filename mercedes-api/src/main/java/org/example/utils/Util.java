@@ -1,7 +1,7 @@
 package org.example.utils;
 
 import com.google.gson.Gson;
-import org.example.models.ICar;
+import org.example.models.Car;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public class Util {
     }
 
     //Метод для поиска машины по ID
-    public static ICar findCarById(List<ICar> cars, String id) {
-        for (ICar car : cars) {
+    public static Car findCarById(List<Car> cars, String id) {
+        for (Car car : cars) {
             if (car.getId().equals(id)) {
                 return car;
             }
